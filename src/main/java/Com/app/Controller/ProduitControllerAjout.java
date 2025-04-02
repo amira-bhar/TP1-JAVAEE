@@ -1,6 +1,6 @@
 package Com.app.Controller;
 
-import Com.app.dao.ProduitDAO;
+import Com.app.dao.GestionProduitDAO;
 import Com.app.metier.Produit;
 
 import javax.servlet.ServletException;
@@ -14,11 +14,11 @@ import java.math.BigDecimal;
 
 @WebServlet("/ajouterProduit")
 public class ProduitControllerAjout extends HttpServlet {
-    private ProduitDAO produitDAO;
+    private GestionProduitDAO produitDAO;
 
     @Override
     public void init() throws ServletException {
-        produitDAO = new ProduitDAO();
+        produitDAO = new GestionProduitDAO();
     }
 
     @Override

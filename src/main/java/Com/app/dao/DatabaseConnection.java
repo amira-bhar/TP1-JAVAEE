@@ -9,7 +9,7 @@ public class DatabaseConnection {
     // URL de connexion à MySQL
     private static final String URL = "jdbc:mysql://localhost:3306/amitdb?serverTimezone=UTC";
     private static final String USER = "root"; // Remplace par ton utilisateur MySQL
-    private static final String PASSWORD = "12345"; // Mets ton mot de passe MySQL
+    private static final String PASSWORD = "amirabdd123*"; // Mets ton mot de passe MySQL
 
 
     public static Connection getConnection() {
