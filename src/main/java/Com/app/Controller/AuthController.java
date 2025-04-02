@@ -1,6 +1,9 @@
 package Com.app.Controller;
 
+import Com.app.metier.IAuthService;
 import Com.app.metier.AuthService;
+import Com.app.dao.GestionUserDAO;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -12,16 +15,15 @@ import java.io.IOException;
 
 @WebServlet("/login")
 public class AuthController extends HttpServlet {
-    private AuthService authService;
+    private IAuthService authService;
 
     @Override
     public void init() throws ServletException {
-        this.authService = new AuthService();
+        this.authService = new AuthService(new GestionUserDAO()); // Injection de dépendance
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Redirection vers la page de connexion
         request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
@@ -30,18 +32,16 @@ public class AuthController extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        if (authService.authenticate(username, password)) {
-            // Stocker l'utilisateur en session
+        if (authService.login(username, password)) {
             HttpSession session = request.getSession();
             session.setAttribute("user", username);
-            session.setMaxInactiveInterval(30 * 60); // Session expire après 30 minutes
+            session.setMaxInactiveInterval(30 * 60); // 30 minutes
 
-            // Ajouter un cookie pour stocker le nom d'utilisateur
             Cookie userCookie = new Cookie("username", username);
-            userCookie.setMaxAge(30 * 60); // Expire après 30 minutes
+            userCookie.setMaxAge(30 * 60);
             response.addCookie(userCookie);
 
-            response.sendRedirect("home.jsp"); // Redirection après connexion réussie
+            response.sendRedirect("home.jsp");
         } else {
             request.setAttribute("error", "Nom d'utilisateur ou mot de passe incorrect.");
             request.getRequestDispatcher("login.jsp").forward(request, response);

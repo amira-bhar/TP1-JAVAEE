@@ -1,18 +1,21 @@
 package Com.app.metier;
 
-import Com.app.dao.UserDAO;
+import Com.app.dao.GestionUserDAO;
 
-public class AuthService {
-    private UserDAO userDAO;
+public class AuthService implements IAuthService {
+    private final GestionUserDAO userDAO;
 
-    public AuthService() {
-        this.userDAO = new UserDAO();
+    public AuthService(GestionUserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
-    public boolean authenticate(String username, String password) {
+    @Override
+    public boolean login(String username, String password) {
         return userDAO.isValidUser(username, password);
     }
+
+    @Override
+    public void logout(String username) {
+        System.out.println(username + " s'est déconnecté.");
+    }
 }
-
-
-

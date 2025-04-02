@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class ProduitDAO {
     private static final String URL = "jdbc:mysql://localhost:3306/amitdb";
     private static final String USER = "root";
-    private static final String PASSWORD = "amirabdd123*";
+    private static final String PASSWORD = "12345";
 
 
     // ✅ Méthode pour récupérer tous les produits
